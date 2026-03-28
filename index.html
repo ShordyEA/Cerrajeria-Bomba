@@ -1,514 +1,504 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Phone, 
-  MapPin, 
-  ShieldCheck, 
-  Wrench, 
-  Home, 
-  Zap, 
-  ArrowRight, 
-  MessageCircle,
-  Menu,
-  X,
-  Hammer,
-  DoorOpen,
-  Construction,
-  ChevronRight,
-  Clock,
-  ShieldAlert,
-  Award,
-  Navigation,
-  Store
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cerrajería Bomba - Soluciones Estructurales</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        /* Clases base para las animaciones de scroll que sustituyen a framer-motion */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .is-visible {
+            opacity: 1 !important;
+            transform: translateY(0) scale(1) !important;
+        }
+        
+        /* Retrasos escalonados */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-50 font-sans text-slate-900 antialiased overflow-x-hidden">
 
-// Variantes de animación para reutilizar
-const fadeIn = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0,
-    transition: { duration: 0.8, ease: "easeOut" }
-  }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
-  }
-};
-
-const App = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [showLegal, setShowLegal] = useState(false);
-
-  const googleMapsUrl = "https://maps.app.goo.gl/4iRw72X2ihdnENZV6";
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navLinks = [
-    { name: 'Inicio', href: '#inicio' },
-    { name: 'Soluciones', href: '#construccion' },
-    { name: 'Ubicación', href: '#ubicacion' },
-    { name: 'Emergencias', href: '#servicios' },
-  ];
-
-  const projects = [
-    {
-      title: "Ingeniería en Metal",
-      desc: "Estructuras de alta resistencia con acabados arquitectónicos para proyectos residenciales y comerciales.",
-      img: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800",
-      tag: "Construcción"
-    },
-    {
-      title: "Sistemas de PVC Premium",
-      desc: "Cerramientos herméticos con tecnología de aislamiento termo-acústico de alto rendimiento.",
-      img: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800",
-      tag: "Eficiencia"
-    },
-    {
-      title: "Accesos Automatizados",
-      desc: "Implementación de motores de alta gama para Lanfors y portones, integrando seguridad y confort.",
-      img: "https://images.unsplash.com/photo-1590103512981-06105ec76785?auto=format&fit=crop&q=80&w=800",
-      tag: "Domótica"
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 antialiased overflow-x-hidden">
-      {/* --- NAVIGATION --- */}
-      <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white/90 backdrop-blur-md border-b border-slate-200 py-3' : 'bg-transparent py-6'}`}>
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-3"
-          >
-            <div className="bg-blue-900 p-2 rounded-lg shadow-lg">
-              <Hammer className="text-white w-6 h-6" />
+    <!-- --- NAVIGATION --- -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-500 bg-transparent py-6">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            
+            <!-- Logo -->
+            <div class="flex items-center gap-3 animate-on-scroll is-visible" style="transform: translateX(-20px); transition: transform 0.8s, opacity 0.8s;">
+                <div class="bg-blue-900 p-2 rounded-lg shadow-lg">
+                    <i data-lucide="hammer" class="text-white w-6 h-6"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-black tracking-tighter text-blue-900 leading-none">
+                        CERRAJERÍA <span class="text-blue-600">BOMBA</span>
+                    </span>
+                    <span class="text-[9px] uppercase tracking-[0.3em] font-bold text-slate-400">Excelencia en Seguridad</span>
+                </div>
             </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-black tracking-tighter text-blue-900 leading-none">
-                CERRAJERÍA <span className="text-blue-600">BOMBA</span>
-              </span>
-              <span className="text-[9px] uppercase tracking-[0.3em] font-bold text-slate-400">Excelencia en Seguridad</span>
+
+            <!-- Menú Escritorio -->
+            <div class="hidden md:flex items-center gap-10">
+                <a href="#inicio" class="text-[10px] font-bold text-slate-500 hover:text-blue-600 transition-colors uppercase tracking-[0.2em]">Inicio</a>
+                <a href="#construccion" class="text-[10px] font-bold text-slate-500 hover:text-blue-600 transition-colors uppercase tracking-[0.2em]">Soluciones</a>
+                <a href="#ubicacion" class="text-[10px] font-bold text-slate-500 hover:text-blue-600 transition-colors uppercase tracking-[0.2em]">Ubicación</a>
+                <a href="#servicios" class="text-[10px] font-bold text-slate-500 hover:text-blue-600 transition-colors uppercase tracking-[0.2em]">Emergencias</a>
+                
+                <a href="tel:090000000" class="bg-blue-900 text-white px-8 py-3 rounded-full text-xs font-bold hover:bg-blue-800 transition-all shadow-xl shadow-blue-100 transform hover:scale-105">
+                    ASISTENCIA 24/7
+                </a>
             </div>
-          </motion.div>
 
-          <div className="hidden md:flex items-center gap-10">
-            {navLinks.map((link, i) => (
-              <motion.a 
-                key={link.name} 
-                href={link.href}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className="text-[10px] font-bold text-slate-500 hover:text-blue-600 transition-colors uppercase tracking-[0.2em]"
-              >
-                {link.name}
-              </motion.a>
-            ))}
-            <motion.a 
-              href="tel:090000000" 
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="bg-blue-900 text-white px-8 py-3 rounded-full text-xs font-bold hover:bg-blue-800 transition-all shadow-xl shadow-blue-100"
-            >
-              ASISTENCIA 24/7
-            </motion.a>
-          </div>
-
-          <button className="md:hidden text-blue-900" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+            <!-- Botón Menú Móvil -->
+            <button id="menuBtn" class="md:hidden text-blue-900 p-2">
+                <i data-lucide="menu" class="w-7 h-7"></i>
+            </button>
         </div>
-      </nav>
+    </nav>
 
-      {/* --- MOBILE MENU --- */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div 
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-[60] bg-white p-8 flex flex-col gap-6 md:hidden"
-          >
-            <div className="flex justify-between items-center mb-8 border-b pb-4">
-              <span className="text-xl font-black text-blue-900 tracking-tighter">BOMBA SEGURIDAD</span>
-              <button onClick={() => setIsMenuOpen(false)}><X size={32} /></button>
-            </div>
-            {navLinks.map((link) => (
-              <a key={link.name} href={link.href} onClick={() => setIsMenuOpen(false)} className="text-3xl font-light text-slate-400 hover:text-blue-900 transition-all tracking-tighter">
-                {link.name}
-              </a>
-            ))}
-            <a href="tel:090000000" className="mt-auto bg-blue-900 text-white p-6 rounded-2xl font-bold text-center text-xl shadow-2xl">
-              LLAMADA DE EMERGENCIA
-            </a>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* --- HERO SECTION --- */}
-      <section id="inicio" className="relative pt-40 pb-20 md:pt-64 md:pb-40 px-6 overflow-hidden">
-        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[600px] h-[600px] bg-blue-50 rounded-full blur-[120px] -z-10"></div>
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div 
-            initial="hidden"
-            animate="visible"
-            variants={fadeIn}
-            className="relative z-10"
-          >
-            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-8 border border-blue-100">
-              <Award size={14} /> Ingeniería de Seguridad & Metalurgia
-            </div>
-            <h1 className="text-6xl md:text-8xl font-black text-slate-900 leading-[0.85] mb-8 tracking-tighter">
-              Soluciones <br />
-              <span className="text-blue-600 font-light italic tracking-tight">Estructurales</span>
-            </h1>
-            <p className="text-xl text-slate-500 max-w-lg leading-relaxed mb-12 font-light">
-              Elevando los estándares de seguridad y construcción. Especialistas en metalmecánica de precisión y servicios técnicos de respuesta inmediata.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-5">
-              <a href="#contacto" className="bg-blue-900 text-white px-10 py-5 rounded-full font-bold text-sm hover:bg-blue-800 transition-all flex items-center justify-center gap-3 shadow-2xl shadow-blue-200">
-                Consulta Técnica <ArrowRight size={18} />
-              </a>
-              <a href="#servicios" className="bg-white border border-slate-200 text-slate-600 px-10 py-5 rounded-full font-bold text-sm hover:bg-slate-50 transition-colors flex items-center justify-center">
-                Servicios 24/7
-              </a>
-            </div>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="relative"
-          >
-            <div className="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(30,58,138,0.2)] border-[12px] border-white">
-              <img 
-                src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200" 
-                alt="Trabajo técnico de precisión"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent"></div>
-            </div>
-          </motion.div>
+    <!-- --- MOBILE MENU --- -->
+    <div id="mobileMenu" class="fixed inset-0 z-[60] bg-white p-8 flex-col gap-6 hidden transform transition-transform duration-300 translate-x-full">
+        <div class="flex justify-between items-center mb-8 border-b pb-4">
+            <span class="text-xl font-black text-blue-900 tracking-tighter">BOMBA SEGURIDAD</span>
+            <button id="closeMenuBtn" class="text-slate-900 p-2">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
         </div>
-      </section>
+        <a href="#inicio" class="mobile-link text-3xl font-light text-slate-400 hover:text-blue-900 transition-all tracking-tighter">Inicio</a>
+        <a href="#construccion" class="mobile-link text-3xl font-light text-slate-400 hover:text-blue-900 transition-all tracking-tighter">Soluciones</a>
+        <a href="#ubicacion" class="mobile-link text-3xl font-light text-slate-400 hover:text-blue-900 transition-all tracking-tighter">Ubicación</a>
+        <a href="#servicios" class="mobile-link text-3xl font-light text-slate-400 hover:text-blue-900 transition-all tracking-tighter">Emergencias</a>
+        
+        <a href="tel:090000000" class="mt-auto bg-blue-900 text-white p-6 rounded-2xl font-bold text-center text-xl shadow-2xl">
+            LLAMADA DE EMERGENCIA
+        </a>
+    </div>
 
-      {/* --- SECCIÓN UBICACIÓN (MODIFICADA) --- */}
-      <section id="ubicacion" className="py-24 bg-white border-y border-slate-100 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            className="text-center mb-16"
-          >
-            <h2 className="text-[10px] font-black text-blue-600 uppercase tracking-[0.5em] mb-4 text-center">Presencia Local</h2>
-            <p className="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter text-center">Nos encontramos ubicados en</p>
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="w-full max-w-6xl bg-slate-900 rounded-[3.5rem] overflow-hidden shadow-3xl flex flex-col md:flex-row items-stretch"
-          >
-            <div className="flex-1 p-10 md:p-24 flex flex-col justify-center">
-              <div className="flex items-center gap-5 mb-8">
-                <div className="bg-blue-500/20 p-5 rounded-3xl">
-                  <Store className="text-blue-400" size={36} />
+    <!-- --- HERO SECTION --- -->
+    <section id="inicio" class="relative pt-40 pb-20 md:pt-64 md:pb-40 px-6 overflow-hidden">
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[600px] h-[600px] bg-blue-50 rounded-full blur-[120px] -z-10"></div>
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+            
+            <div class="relative z-10 animate-on-scroll">
+                <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-8 border border-blue-100">
+                    <i data-lucide="award" class="w-3.5 h-3.5"></i> Ingeniería de Seguridad & Metalurgia
                 </div>
-                <div>
-                  <h3 className="text-white text-3xl font-black tracking-tight leading-none">Sector Chiriyacu</h3>
-                  <p className="text-blue-300/50 text-sm italic font-medium uppercase tracking-widest mt-2">Sur de Quito</p>
+                <h1 class="text-6xl md:text-8xl font-black text-slate-900 leading-[0.85] mb-8 tracking-tighter">
+                    Soluciones <br />
+                    <span class="text-blue-600 font-light italic tracking-tight">Estructurales</span>
+                </h1>
+                <p class="text-xl text-slate-500 max-w-lg leading-relaxed mb-12 font-light">
+                    Elevando los estándares de seguridad y construcción. Especialistas en metalmecánica de precisión y servicios técnicos de respuesta inmediata.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-5">
+                    <a href="#contacto" class="bg-blue-900 text-white px-10 py-5 rounded-full font-bold text-sm hover:bg-blue-800 transition-all flex items-center justify-center gap-3 shadow-2xl shadow-blue-200">
+                        Consulta Técnica <i data-lucide="arrow-right" class="w-4.5 h-4.5"></i>
+                    </a>
+                    <a href="#servicios" class="bg-white border border-slate-200 text-slate-600 px-10 py-5 rounded-full font-bold text-sm hover:bg-slate-50 transition-colors flex items-center justify-center">
+                        Servicios 24/7
+                    </a>
                 </div>
-              </div>
-              <p className="text-slate-400 text-xl font-light leading-relaxed mb-12">
-                Nuestra matriz operativa se encuentra en el <span className="text-white font-bold">sector del Mercado Chiriyacu</span>. Estamos estratégicamente posicionados para atender emergencias en el centro y sur de Quito en menos de 20 minutos.
-              </p>
-              
-              <div className="space-y-4 mb-12">
-                <div className="flex items-center gap-4 text-blue-200/70">
-                   <MapPin size={20} className="text-blue-500" />
-                   <span className="text-sm font-medium italic">Referencia: Junto al Mercado Chiriyacu</span>
-                </div>
-              </div>
+            </div>
 
-              <a 
-                href={googleMapsUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="group flex items-center justify-between bg-blue-600 text-white px-10 py-6 rounded-3xl font-black hover:bg-blue-500 transition-all shadow-2xl shadow-blue-900/40 transform hover:-translate-y-1"
-              >
-                <span className="tracking-widest">COMO LLEGAR AL LOCAL</span>
-                <Navigation size={24} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </a>
+            <div class="relative animate-scale">
+                <div class="relative aspect-[4/5] rounded-[3rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(30,58,138,0.2)] border-[12px] border-white">
+                    <img 
+                        src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=1200" 
+                        alt="Trabajo técnico de precisión"
+                        class="w-full h-full object-cover"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SECCIÓN UBICACIÓN --- -->
+    <section id="ubicacion" class="py-24 bg-white border-y border-slate-100 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center">
+            <div class="text-center mb-16 animate-on-scroll">
+                <h2 class="text-[10px] font-black text-blue-600 uppercase tracking-[0.5em] mb-4 text-center">Presencia Local</h2>
+                <p class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter text-center">Nos encontramos ubicados en</p>
             </div>
             
-            <div className="flex-1 min-h-[400px] relative group cursor-pointer overflow-hidden bg-slate-800">
-              {/* ESPACIO PARA TU FOTO REAL */}
-              <img 
-                src="https://images.unsplash.com/photo-159742324403d-c1a50e0324c5?auto=format&fit=crop&q=80&w=1200" 
-                alt="Fachada de Cerrajería Bomba" 
-                className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000 grayscale-[50%] group-hover:grayscale-0"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-transparent to-transparent"></div>
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <span className="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-2 rounded-full text-white text-xs font-bold uppercase tracking-widest">
-                   Nuestro Taller
-                </span>
-              </div>
-              {/* Overlay informativo de ayuda para Shordy */}
-              <div className="absolute bottom-6 right-6 text-white/30 text-[10px] uppercase font-bold tracking-widest pointer-events-none">
-                 [ Aquí va la foto de tu local ]
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* --- PROYECTOS / CONSTRUCCIÓN --- */}
-      <section id="construccion" className="py-32 bg-[#f8fafc]">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8"
-          >
-            <div className="max-w-2xl">
-              <h2 className="text-blue-600 font-bold tracking-[0.4em] uppercase text-[10px] mb-4">Ingeniería & Diseño</h2>
-              <p className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-none">
-                Estructuras que definen <br /> <span className="text-slate-300">espacios seguros.</span>
-              </p>
-            </div>
-            <p className="text-slate-500 md:w-1/3 text-sm font-light leading-relaxed italic">
-              "Colaboramos con constructoras para entregar metalmecánica de norma ISO."
-            </p>
-          </motion.div>
-
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-10"
-          >
-            {projects.map((item, idx) => (
-              <motion.div 
-                key={idx} 
-                variants={fadeIn}
-                className="group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 hover:border-blue-200 transition-all duration-500 hover:shadow-[0_32px_64px_-16px_rgba(30,58,138,0.1)]"
-              >
-                <div className="aspect-[16/11] overflow-hidden relative">
-                   <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                   <div className="absolute bottom-4 left-4 bg-blue-900/90 backdrop-blur px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest text-white">
-                     {item.tag}
-                   </div>
-                </div>
-                <div className="p-10 flex flex-col h-full">
-                  <h3 className="text-2xl font-bold text-slate-900 mb-4">{item.title}</h3>
-                  <p className="text-slate-500 text-sm font-light leading-relaxed mb-8">{item.desc}</p>
-                  <button className="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-widest group/btn mt-auto">
-                    Especificaciones <ChevronRight size={16} className="group-hover/btn:translate-x-2 transition-transform" />
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* --- SERVICIOS DE ASISTENCIA (EMERGENCIA) --- */}
-      <section id="servicios" className="py-24 px-6">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-7xl mx-auto bg-blue-900 rounded-[4rem] p-10 md:p-24 relative overflow-hidden shadow-2xl"
-        >
-          <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-400/5 -skew-x-12 translate-x-1/2"></div>
-          
-          <div className="relative z-10 grid md:grid-cols-2 gap-20 items-center">
-            <div>
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="inline-flex items-center gap-2 bg-blue-400/10 text-blue-300 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-8 border border-blue-400/20"
-              >
-                <ShieldAlert size={14} /> Respuesta Crítica Inmediata
-              </motion.div>
-              <h3 className="text-4xl md:text-7xl font-black text-white mb-8 leading-[0.9] tracking-tighter">
-                Restablecemos su acceso, <br />
-                <span className="text-blue-400 font-light italic text-5xl md:text-6xl">protegemos su calma.</span>
-              </h3>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
-                {[
-                  { icon: <Clock size={20} />, title: "Tiempo récord", sub: "20-30 minutos" },
-                  { icon: <ShieldCheck size={20} />, title: "Garantía total", sub: "Sin daños estructurales" },
-                  { icon: <MapPin size={20} />, title: "Cobertura total", sub: "DMQ y periferias" },
-                  { icon: <Wrench size={20} />, title: "Alta gama", sub: "Todas las tecnologías" },
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-4 items-start">
-                    <div className="text-blue-400 mt-1">{item.icon}</div>
-                    <div>
-                      <p className="text-white font-bold text-sm uppercase tracking-wider leading-none">{item.title}</p>
-                      <p className="text-blue-300/50 text-xs mt-1 font-medium italic">{item.sub}</p>
+            <div class="w-full max-w-6xl bg-slate-900 rounded-[3.5rem] overflow-hidden shadow-2xl flex flex-col md:flex-row items-stretch animate-on-scroll">
+                <div class="flex-1 p-10 md:p-24 flex flex-col justify-center">
+                    <div class="flex items-center gap-5 mb-8">
+                        <div class="bg-blue-500/20 p-5 rounded-3xl">
+                            <i data-lucide="store" class="text-blue-400 w-9 h-9"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-white text-3xl font-black tracking-tight leading-none">Sector Chiriyacu</h3>
+                            <p class="text-blue-300/50 text-sm italic font-medium uppercase tracking-widest mt-2">Sur de Quito</p>
+                        </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-              
-              <motion.a 
-                href="tel:090000000" 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-block bg-white text-blue-900 px-12 py-6 rounded-full font-black text-lg hover:bg-blue-50 transition-colors shadow-2xl"
-              >
-                SOLICITAR ASISTENCIA AHORA
-              </motion.a>
+                    <p class="text-slate-400 text-xl font-light leading-relaxed mb-12">
+                        Nuestra matriz operativa se encuentra en el <span class="text-white font-bold">sector del Mercado Chiriyacu</span>. Estamos estratégicamente posicionados para atender emergencias en el centro y sur de Quito en menos de 20 minutos.
+                    </p>
+                    
+                    <div class="space-y-4 mb-12">
+                        <div class="flex items-center gap-4 text-blue-200/70">
+                            <i data-lucide="map-pin" class="text-blue-500 w-5 h-5"></i>
+                            <span class="text-sm font-medium italic">Referencia: Junto al Mercado Chiriyacu</span>
+                        </div>
+                    </div>
+
+                    <a 
+                        href="https://maps.app.goo.gl/4iRw72X2ihdnENZV6" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="group flex items-center justify-between bg-blue-600 text-white px-10 py-6 rounded-3xl font-black hover:bg-blue-500 transition-all shadow-2xl shadow-blue-900/40 transform hover:-translate-y-1"
+                    >
+                        <span class="tracking-widest">CÓMO LLEGAR AL LOCAL</span>
+                        <i data-lucide="navigation" class="w-6 h-6 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                    </a>
+                </div>
+                
+                <div class="flex-1 min-h-[400px] relative group cursor-pointer overflow-hidden bg-slate-800">
+                    <!-- FOTO REAL -->
+                    <img 
+                        src="https://images.unsplash.com/photo-159742324403d-c1a50e0324c5?auto=format&fit=crop&q=80&w=1200" 
+                        alt="Fachada del local" 
+                        class="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-1000 grayscale-[50%] group-hover:grayscale-0"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-transparent to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span class="bg-white/10 backdrop-blur-md border border-white/20 px-6 py-2 rounded-full text-white text-xs font-bold uppercase tracking-widest">
+                            Nuestro Taller
+                        </span>
+                    </div>
+                    <!-- Overlay de ayuda -->
+                    <div class="absolute bottom-6 right-6 text-white/30 text-[10px] uppercase font-bold tracking-widest pointer-events-none">
+                        [ Aquí va la foto de tu local ]
+                    </div>
+                </div>
             </div>
-          </div>
-        </motion.div>
-      </section>
+        </div>
+    </section>
 
-      {/* --- CONTACTO --- */}
-      <section id="contacto" className="py-40 px-6 text-center">
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeIn}
-          className="max-w-4xl mx-auto"
-        >
-          <h2 className="text-4xl md:text-6xl font-black text-slate-900 mb-12 relative z-10 tracking-tight leading-tight">
-            Diseñamos la seguridad <br /> de su <span className="text-blue-600 underline decoration-blue-200 underline-offset-8">patrimonio.</span>
-          </h2>
-          <div className="inline-flex flex-col items-center gap-8">
-            <motion.a 
-              href="https://wa.me/123456789" 
-              whileHover={{ scale: 1.05 }}
-              className="group flex items-center gap-5 bg-green-600 text-white px-14 py-8 rounded-full text-2xl font-black hover:bg-green-700 transition-all shadow-[0_24px_48px_-12px_rgba(22,163,74,0.3)]"
-            >
-              <MessageCircle size={32} fill="white" /> Consultar vía WhatsApp
-            </motion.a>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* --- FOOTER --- */}
-      <footer className="bg-white border-t border-slate-100 pt-32 pb-16 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-20 mb-32">
-          <div className="col-span-2">
-            <div className="flex items-center gap-3 mb-10">
-              <div className="bg-blue-900 p-2 rounded-lg">
-                <Hammer className="text-white w-6 h-6" />
-              </div>
-              <span className="text-2xl font-black tracking-tighter text-blue-900 text-center">
-                CERRAJERÍA BOMBA
-              </span>
+    <!-- --- PROYECTOS / CONSTRUCCIÓN --- -->
+    <section id="construccion" class="py-32 bg-[#f8fafc]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8 animate-on-scroll">
+                <div class="max-w-2xl">
+                    <h2 class="text-blue-600 font-bold tracking-[0.4em] uppercase text-[10px] mb-4">Ingeniería & Diseño</h2>
+                    <p class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight leading-none">
+                        Estructuras que definen <br /> <span class="text-slate-300">espacios seguros.</span>
+                    </p>
+                </div>
+                <p class="text-slate-500 md:w-1/3 text-sm font-light leading-relaxed italic">
+                    "Colaboramos con constructoras para entregar metalmecánica de norma ISO."
+                </p>
             </div>
-            <p className="text-slate-400 font-medium leading-relaxed max-w-md italic">
-              "Excelencia en cada giro, solidez en cada estructura." <br /> 
-              Quito, Ecuador - Sector Chiriyacu.
-            </p>
-          </div>
-          
-          <div>
-            <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-10 border-b border-slate-100 pb-2">Especialidades</h4>
-            <ul className="space-y-5 text-xs text-slate-500 font-bold uppercase tracking-wider">
-              <li>Aperturas de Seguridad</li>
-              <li>Estructuras Metálicas</li>
-              <li>Sistemas PVC</li>
-              <li>Automatización</li>
-            </ul>
-          </div>
 
-          <div>
-            <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-10 border-b border-slate-100 pb-2">Información</h4>
-            <ul className="space-y-5 text-xs text-slate-500 font-bold uppercase tracking-wider">
-              <li><button onClick={() => setShowLegal(true)} className="hover:text-blue-600 transition-colors">Términos Legales</button></li>
-              <li><button onClick={() => setShowLegal(true)} className="hover:text-blue-600 transition-colors">Privacidad de Datos</button></li>
-              <li>Garantías</li>
-            </ul>
-          </div>
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Tarjeta 1 -->
+                <div class="group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 hover:border-blue-200 transition-all duration-500 hover:shadow-[0_32px_64px_-16px_rgba(30,58,138,0.1)] animate-on-scroll delay-100">
+                    <div class="aspect-[16/11] overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&q=80&w=800" alt="Ingeniería en Metal" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute bottom-4 left-4 bg-blue-900/90 backdrop-blur px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest text-white">
+                            Construcción
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col h-full">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">Ingeniería en Metal</h3>
+                        <p class="text-slate-500 text-sm font-light leading-relaxed mb-8">Estructuras de alta resistencia con acabados arquitectónicos para proyectos residenciales y comerciales.</p>
+                        <button class="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-widest group/btn mt-auto">
+                            Especificaciones <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-2 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2 -->
+                <div class="group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 hover:border-blue-200 transition-all duration-500 hover:shadow-[0_32px_64px_-16px_rgba(30,58,138,0.1)] animate-on-scroll delay-200">
+                    <div class="aspect-[16/11] overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=800" alt="Sistemas de PVC Premium" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute bottom-4 left-4 bg-blue-900/90 backdrop-blur px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest text-white">
+                            Eficiencia
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col h-full">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">Sistemas de PVC Premium</h3>
+                        <p class="text-slate-500 text-sm font-light leading-relaxed mb-8">Cerramientos herméticos con tecnología de aislamiento termo-acústico de alto rendimiento.</p>
+                        <button class="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-widest group/btn mt-auto">
+                            Especificaciones <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-2 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3 -->
+                <div class="group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 hover:border-blue-200 transition-all duration-500 hover:shadow-[0_32px_64px_-16px_rgba(30,58,138,0.1)] animate-on-scroll delay-300">
+                    <div class="aspect-[16/11] overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1590103512981-06105ec76785?auto=format&fit=crop&q=80&w=800" alt="Accesos Automatizados" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                        <div class="absolute bottom-4 left-4 bg-blue-900/90 backdrop-blur px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest text-white">
+                            Domótica
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col h-full">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-4">Accesos Automatizados</h3>
+                        <p class="text-slate-500 text-sm font-light leading-relaxed mb-8">Implementación de motores de alta gama para Lanfors y portones, integrando seguridad y confort.</p>
+                        <button class="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-widest group/btn mt-auto">
+                            Especificaciones <i data-lucide="chevron-right" class="w-4 h-4 group-hover:translate-x-2 transition-transform"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- SERVICIOS DE ASISTENCIA (EMERGENCIA) --- -->
+    <section id="servicios" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto bg-blue-900 rounded-[4rem] p-10 md:p-24 relative overflow-hidden shadow-2xl animate-scale">
+            <div class="absolute top-0 right-0 w-1/3 h-full bg-blue-400/5 -skew-x-12 translate-x-1/2"></div>
+            
+            <div class="relative z-10 grid md:grid-cols-2 gap-20 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 bg-blue-400/10 text-blue-300 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest mb-8 border border-blue-400/20">
+                        <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i> Respuesta Crítica Inmediata
+                    </div>
+                    <h3 class="text-4xl md:text-7xl font-black text-white mb-8 leading-[0.9] tracking-tighter">
+                        Restablecemos su acceso, <br />
+                        <span class="text-blue-400 font-light italic text-5xl md:text-6xl">protegemos su calma.</span>
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
+                        <div class="flex gap-4 items-start">
+                            <div class="text-blue-400 mt-1"><i data-lucide="clock" class="w-5 h-5"></i></div>
+                            <div>
+                                <p class="text-white font-bold text-sm uppercase tracking-wider leading-none">Tiempo récord</p>
+                                <p class="text-blue-300/50 text-xs mt-1 font-medium italic">20-30 minutos</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="text-blue-400 mt-1"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+                            <div>
+                                <p class="text-white font-bold text-sm uppercase tracking-wider leading-none">Garantía total</p>
+                                <p class="text-blue-300/50 text-xs mt-1 font-medium italic">Sin daños estructurales</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="text-blue-400 mt-1"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+                            <div>
+                                <p class="text-white font-bold text-sm uppercase tracking-wider leading-none">Cobertura total</p>
+                                <p class="text-blue-300/50 text-xs mt-1 font-medium italic">DMQ y periferias</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="text-blue-400 mt-1"><i data-lucide="wrench" class="w-5 h-5"></i></div>
+                            <div>
+                                <p class="text-white font-bold text-sm uppercase tracking-wider leading-none">Alta gama</p>
+                                <p class="text-blue-300/50 text-xs mt-1 font-medium italic">Todas las tecnologías</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="tel:090000000" class="inline-block bg-white text-blue-900 px-12 py-6 rounded-full font-black text-lg hover:bg-blue-50 transition-transform transform hover:scale-105 active:scale-95 shadow-2xl">
+                        SOLICITAR ASISTENCIA AHORA
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- CONTACTO --- -->
+    <section id="contacto" class="py-40 px-6 text-center">
+        <div class="max-w-4xl mx-auto animate-on-scroll">
+            <h2 class="text-4xl md:text-6xl font-black text-slate-900 mb-12 relative z-10 tracking-tight leading-tight">
+                Diseñamos la seguridad <br /> de su <span class="text-blue-600 underline decoration-blue-200 underline-offset-8">patrimonio.</span>
+            </h2>
+            <div class="inline-flex flex-col items-center gap-8">
+                <a href="https://wa.me/123456789" class="group flex items-center gap-5 bg-green-600 text-white px-14 py-8 rounded-full text-2xl font-black hover:bg-green-700 transition-transform transform hover:scale-105 shadow-[0_24px_48px_-12px_rgba(22,163,74,0.3)]">
+                    <i data-lucide="message-circle" class="w-8 h-8 fill-white"></i> Consultar vía WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- FOOTER --- -->
+    <footer class="bg-white border-t border-slate-100 pt-32 pb-16 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-20 mb-32">
+            <div class="col-span-2">
+                <div class="flex items-center gap-3 mb-10">
+                    <div class="bg-blue-900 p-2 rounded-lg">
+                        <i data-lucide="hammer" class="text-white w-6 h-6"></i>
+                    </div>
+                    <span class="text-2xl font-black tracking-tighter text-blue-900 text-center">
+                        CERRAJERÍA BOMBA
+                    </span>
+                </div>
+                <p class="text-slate-400 font-medium leading-relaxed max-w-md italic">
+                    "Excelencia en cada giro, solidez en cada estructura." <br /> 
+                    Quito, Ecuador - Sector Chiriyacu.
+                </p>
+            </div>
+            
+            <div>
+                <h4 class="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-10 border-b border-slate-100 pb-2">Especialidades</h4>
+                <ul class="space-y-5 text-xs text-slate-500 font-bold uppercase tracking-wider">
+                    <li>Aperturas de Seguridad</li>
+                    <li>Estructuras Metálicas</li>
+                    <li>Sistemas PVC</li>
+                    <li>Automatización</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-10 border-b border-slate-100 pb-2">Información</h4>
+                <ul class="space-y-5 text-xs text-slate-500 font-bold uppercase tracking-wider">
+                    <li><button class="legal-btn hover:text-blue-600 transition-colors">Términos Legales</button></li>
+                    <li><button class="legal-btn hover:text-blue-600 transition-colors">Privacidad de Datos</button></li>
+                    <li>Garantías</li>
+                </ul>
+            </div>
         </div>
         
-        <div className="max-w-7xl mx-auto pt-16 border-t border-slate-100 text-center text-[10px] font-bold text-slate-300 uppercase tracking-[0.3em]">
-          <p>© 2024 Cerrajería Bomba - Excelencia Técnica en Seguridad.</p>
+        <div class="max-w-7xl mx-auto pt-16 border-t border-slate-100 text-center text-[10px] font-bold text-slate-300 uppercase tracking-[0.3em]">
+            <p>© 2024 Cerrajería Bomba - Excelencia Técnica en Seguridad.</p>
         </div>
-      </footer>
+    </footer>
 
-      {/* --- LEGAL MODAL --- */}
-      <AnimatePresence>
-        {showLegal && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-md flex items-center justify-center p-6 text-center"
-          >
-            <motion.div 
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              className="bg-white rounded-[3rem] max-w-2xl w-full max-h-[85vh] overflow-y-auto p-12 relative shadow-3xl text-left"
-            >
-              <button onClick={() => setShowLegal(false)} className="absolute top-8 right-8 text-slate-300 hover:text-slate-900 transition-colors">
-                <X size={28} />
-              </button>
-              <h2 className="text-3xl font-black mb-8 text-blue-900 tracking-tighter text-center">Protocolos & Privacidad</h2>
-              <div className="prose prose-slate text-sm text-slate-500 space-y-8 font-light leading-relaxed">
+    <!-- --- LEGAL MODAL --- -->
+    <div id="legalModal" class="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-md hidden items-center justify-center p-6 text-center opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-[3rem] max-w-2xl w-full max-h-[85vh] overflow-y-auto p-12 relative shadow-2xl text-left transform scale-95 transition-transform duration-300" id="legalModalContent">
+            <button id="closeLegalBtn" class="absolute top-8 right-8 text-slate-300 hover:text-slate-900 transition-colors">
+                <i data-lucide="x" class="w-7 h-7"></i>
+            </button>
+            <h2 class="text-3xl font-black mb-8 text-blue-900 tracking-tighter text-center">Protocolos & Privacidad</h2>
+            <div class="prose prose-slate text-sm text-slate-500 space-y-8 font-light leading-relaxed">
                 <section>
-                  <p className="font-bold text-blue-600 uppercase tracking-widest text-[10px] mb-2">1. Marco Operativo</p>
-                  <p>Cerrajería Bomba opera bajo estrictos estándares de seguridad civil en el sector Chiriyacu y todo Quito.</p>
+                    <p class="font-bold text-blue-600 uppercase tracking-widest text-[10px] mb-2">1. Marco Operativo</p>
+                    <p>Cerrajería Bomba opera bajo estrictos estándares de seguridad civil en el sector Chiriyacu y todo Quito.</p>
                 </section>
                 <section>
-                  <p className="font-bold text-blue-600 uppercase tracking-widest text-[10px] mb-2">2. Protección de Datos</p>
-                  <p>Su información de contacto se maneja bajo estricta confidencialidad para fines logísticos del servicio.</p>
+                    <p class="font-bold text-blue-600 uppercase tracking-widest text-[10px] mb-2">2. Protección de Datos</p>
+                    <p>Su información de contacto se maneja bajo estricta confidencialidad para fines logísticos del servicio.</p>
                 </section>
-              </div>
-              <button onClick={() => setShowLegal(false)} className="mt-12 w-full bg-blue-900 text-white py-5 rounded-2xl font-bold uppercase tracking-widest text-xs hover:bg-blue-800 transition-all shadow-xl shadow-blue-100">
+            </div>
+            <button id="acceptLegalBtn" class="mt-12 w-full bg-blue-900 text-white py-5 rounded-2xl font-bold uppercase tracking-widest text-xs hover:bg-blue-800 transition-all shadow-xl shadow-blue-100">
                 Aceptar Términos
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* --- FLOATING WHATSAPP --- */}
-      <motion.a 
-        href="https://wa.me/123456789" 
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        whileHover={{ scale: 1.1, rotate: 5 }}
-        className="fixed bottom-10 right-10 bg-green-600 text-white w-20 h-20 rounded-full shadow-[0_20px_40px_rgba(22,163,74,0.4)] z-50 flex items-center justify-center border-[6px] border-white group"
-      >
-        <MessageCircle size={36} fill="white" />
-      </motion.a>
+            </button>
+        </div>
     </div>
-  );
-};
 
-export default App;
+    <!-- --- FLOATING WHATSAPP --- -->
+    <a href="https://wa.me/123456789" class="fixed bottom-10 right-10 bg-green-600 text-white w-20 h-20 rounded-full shadow-[0_20px_40px_rgba(22,163,74,0.4)] z-50 flex items-center justify-center border-[6px] border-white group hover:scale-110 transition-transform duration-300">
+        <i data-lucide="message-circle" class="w-9 h-9 fill-white"></i>
+    </a>
+
+    <!-- SCRIPTS MÁGICOS PARA QUE TODO FUNCIONE SIN REACT -->
+    <script>
+        // Inicializar los iconos de Lucide
+        lucide.createIcons();
+
+        // 1. Navbar con efecto de cristal al hacer scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('bg-white/90', 'backdrop-blur-md', 'border-b', 'border-slate-200', 'py-3');
+                navbar.classList.remove('bg-transparent', 'py-6');
+            } else {
+                navbar.classList.remove('bg-white/90', 'backdrop-blur-md', 'border-b', 'border-slate-200', 'py-3');
+                navbar.classList.add('bg-transparent', 'py-6');
+            }
+        });
+
+        // 2. Menú Móvil
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function toggleMenu() {
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                setTimeout(() => mobileMenu.classList.remove('translate-x-full'), 10);
+            } else {
+                mobileMenu.classList.add('translate-x-full');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('flex');
+                }, 300);
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+        mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // 3. Modal Legal
+        const legalModal = document.getElementById('legalModal');
+        const legalModalContent = document.getElementById('legalModalContent');
+        const legalBtns = document.querySelectorAll('.legal-btn');
+        const closeLegalBtn = document.getElementById('closeLegalBtn');
+        const acceptLegalBtn = document.getElementById('acceptLegalBtn');
+
+        function openModal() {
+            legalModal.classList.remove('hidden');
+            legalModal.classList.add('flex');
+            // Pequeño timeout para que la transición de CSS funcione
+            setTimeout(() => {
+                legalModal.classList.remove('opacity-0');
+                legalModalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        function closeModal() {
+            legalModal.classList.add('opacity-0');
+            legalModalContent.classList.add('scale-95');
+            setTimeout(() => {
+                legalModal.classList.add('hidden');
+                legalModal.classList.remove('flex');
+            }, 300);
+        }
+
+        legalBtns.forEach(btn => btn.addEventListener('click', openModal));
+        closeLegalBtn.addEventListener('click', closeModal);
+        acceptLegalBtn.addEventListener('click', closeModal);
+
+        // 4. Animaciones al hacer scroll (sustituyendo a Framer Motion)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // Para que solo se anime la primera vez que se ve (igual que viewport={{ once: true }})
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll, .animate-scale').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Animación de entrada inicial para el logo y botón de WhatsApp
+        window.addEventListener('load', () => {
+            // El logo y los elementos iniciales ya se animan por la clase
+            const navbarLogo = document.querySelector('nav .flex.items-center.gap-3');
+            if(navbarLogo) {
+                navbarLogo.style.transform = 'translateX(0)';
+            }
+        });
+    </script>
+</body>
+</html>
